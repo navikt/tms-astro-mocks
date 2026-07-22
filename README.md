@@ -40,7 +40,7 @@ Kjør `astro dev`, så serveres mockene dine av utviklingsserveren.
 
 ## Organisere mocker i filer
 
-Det finnes ingen automatisk oppdaging — du `import`-erer mock-filene dine og sender dem inn. Dette holder
+Det finnes ingen auto-discovery — du importerer mock-filene dine og sender dem inn. Dette holder
 integrasjonen liten og lar deg bruke ren JSON for statiske data og JS/TS for dynamisk logikk.
 
 ### Statiske data med JSON
