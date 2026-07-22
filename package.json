@@ -1,6 +1,6 @@
 {
   "name": "tms-astro-mocks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Astro integration that serves mock HTTP endpoints during development only.",
   "type": "module",
   "license": "MIT",
