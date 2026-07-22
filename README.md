@@ -13,7 +13,6 @@ Mocks kobles inn via Astro sin `astro:server:setup`-hook, som kjører **utelukke
 
 ```sh
 pnpm add -D tms-astro-mocks
-# eller: npm i -D tms-astro-mocks / yarn add -D tms-astro-mocks
 ```
 
 ## Bruk
