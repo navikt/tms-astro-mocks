@@ -167,14 +167,14 @@ mockServer({
 
 ## Slik fungerer det
 
-Integrasjonen registrerer en Vite-mellomvare for utviklingsserveren inne i `astro:server:setup`-hooken.
+Integrasjonen registrerer en Vite-middleware for utviklingsserveren inne i `astro:server:setup`-hooken.
 Requester som matcher en mock (etter metode + sti) besvares direkte; alt annet
-faller videre til Astro. Siden hooken kun kjører under `astro dev`, blir mellomvaren
+faller videre til Astro. Siden hooken kun kjører under `astro dev`, blir middlewaren
 aldri en del av produksjonsbygget.
 
 > **Merk:** mocker serveres på samme origin som Astro-utviklingsserveren. Hvis appen din
 > henter data fra en annen origin (f.eks. en absolutt URL til en annen port), pek den
-> URL-en mot utviklingsserverens origin slik at mellomvaren kan fange opp den.
+> URL-en mot utviklingsserverens origin slik at middlewaren kan fange opp den.
 
 ## Lisens
 
