@@ -49,15 +49,23 @@ jobs:
       - name: Bump version
         id: bump
         run: |
+          set -euo pipefail
           NEW_VERSION=$(pnpm version "${{ inputs.version }}" --no-git-tag-version | tail -n1)
+          if [ -z "${NEW_VERSION}" ]; then
+            echo "::error::Version bump produced an empty version (is it unchanged?)."
+            exit 1
+          fi
           echo "version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
           echo "Bumped to ${NEW_VERSION}"
 
       - name: Commit and tag
         run: |
-          git commit -am "chore: release ${{ steps.bump.outputs.version }}"
-          git tag "${{ steps.bump.outputs.version }}"
-          git push origin HEAD --follow-tags
+          set -euo pipefail
+          VERSION="${{ steps.bump.outputs.version }}"
+          git commit -am "chore: release ${VERSION}"
+          git tag -a "${VERSION}" -m "${VERSION}"
+          git push origin HEAD
+          git push origin "${VERSION}"
 
       - name: Create GitHub Release
         env:
