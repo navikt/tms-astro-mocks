@@ -1,24 +1,24 @@
 # tms-astro-mocks
 
-An [Astro integration](https://docs.astro.build/en/guides/integrations-guide/) that serves **mock HTTP endpoints during development only**.
+En [Astro-integrasjon](https://docs.astro.build/en/guides/integrations-guide/) som serverer **mock-HTTP-endepunkter kun under utvikling**.
 
-Mocks are wired through Astro's `astro:server:setup` hook, which runs **exclusively during `astro dev`**. Nothing is registered for `astro build`, so your production output is never affected.
+Mocker kobles inn via Astro sin `astro:server:setup`-hook, som kjører **utelukkende under `astro dev`**. Ingenting registreres for `astro build`, så produksjonsbygget påvirkes aldri.
 
-- ⚙️ Declare mocks in `astro.config` — import JSON for static data, or JS/TS for dynamic handlers
-- 🎛️ Custom status codes, response delays, dynamic handlers, and `:param` path params
-- 🔒 Dev-only by design — never bundled into production
-- 🪶 Zero runtime dependencies
+- ⚙️ Deklarer mocker i `astro.config` — importer JSON for statiske data, eller JS/TS for dynamiske handlere
+- 🎛️ Egendefinerte statuskoder, responsforsinkelser, dynamiske handlere og `:param`-stiparametere
+- 🔒 Kun for utvikling — havner aldri i produksjonsbygget
+- 🪶 Ingen runtime-avhengigheter
 
-## Installation
+## Installasjon
 
 ```sh
 pnpm add -D tms-astro-mocks
-# or: npm i -D tms-astro-mocks / yarn add -D tms-astro-mocks
+# eller: npm i -D tms-astro-mocks / yarn add -D tms-astro-mocks
 ```
 
-## Usage
+## Bruk
 
-Add the integration to `astro.config.mjs` and pass your mock definitions:
+Legg integrasjonen til i `astro.config.mjs` og send inn mock-definisjonene dine:
 
 ```js
 import { defineConfig } from "astro/config";
@@ -36,14 +36,14 @@ export default defineConfig({
 });
 ```
 
-Run `astro dev` and your mocks are served by the dev server.
+Kjør `astro dev`, så serveres mockene dine av utviklingsserveren.
 
-## Organizing mocks in files
+## Organisere mocker i filer
 
-There's no auto-discovery — you `import` your mock files and pass them in. This keeps the
-integration tiny and lets you use plain JSON for static data and JS/TS for dynamic logic.
+Det finnes ingen automatisk oppdaging — du `import`-erer mock-filene dine og sender dem inn. Dette holder
+integrasjonen liten og lar deg bruke ren JSON for statiske data og JS/TS for dynamisk logikk.
 
-### Static data with JSON
+### Statiske data med JSON
 
 ```json
 // mock/users.json
@@ -63,7 +63,7 @@ export default defineConfig({
 });
 ```
 
-### Dynamic handlers with JS/TS
+### Dynamiske handlere med JS/TS
 
 ```ts
 // mock/products.ts
@@ -102,41 +102,41 @@ export default defineConfig({
 });
 ```
 
-Definitions are deduplicated by `method` + `path` — **the last one wins**, so you can
-spread an imported set and then override a single route inline.
+Definisjoner dedupliseres etter `method` + `path` — **den siste vinner**, så du kan
+spre inn et importert sett og deretter overstyre en enkelt rute inline.
 
-## Mock definition
+## Mock-definisjon
 
 ```ts
 interface MockDefinition {
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS"; // default "GET"
-  path: string;         // supports ":param", e.g. "/users/:id"
-  status?: number;      // default 200 (ignored when a handler returns a Response)
-  delay?: number;       // artificial delay in ms, default 0
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS"; // standard "GET"
+  path: string;         // støtter ":param", f.eks. "/users/:id"
+  status?: number;      // standard 200 (ignoreres når en handler returnerer en Response)
+  delay?: number;       // kunstig forsinkelse i ms, standard 0
   headers?: Record<string, string>;
-  response?: unknown;   // static body; object -> JSON, string -> text
+  response?: unknown;   // statisk body; objekt -> JSON, streng -> tekst
   handler?: (ctx: MockContext) => MockResult | Promise<MockResult>;
 }
 ```
 
-### Handler context
+### Handler-kontekst
 
 ```ts
 interface MockContext {
-  req: IncomingMessage;          // raw Node request
-  url: URL;                      // parsed request URL
-  method: HttpMethod;            // upper-cased HTTP method
-  params: Record<string, string>; // extracted path params, e.g. { id: "42" }
-  query: URLSearchParams;        // query string params
-  body: unknown;                 // parsed JSON body, raw string, or undefined
+  req: IncomingMessage;          // rå Node-request
+  url: URL;                      // parset request-URL
+  method: HttpMethod;            // HTTP-metode i store bokstaver
+  params: Record<string, string>; // uttrukne stiparametere, f.eks. { id: "42" }
+  query: URLSearchParams;        // parametere fra query-strengen
+  body: unknown;                 // parset JSON-body, rå streng eller undefined
 }
 ```
 
-A handler may return:
+En handler kan returnere:
 
-- a plain **object** → serialized as JSON
-- a **string** → sent as `text/plain`
-- a standard **`Response`** → passed through as-is (its status/headers/body win)
+- et vanlig **objekt** → serialisert som JSON
+- en **streng** → sendt som `text/plain`
+- en standard **`Response`** → sendes videre som den er (dens status/headers/body vinner)
 
 ```ts
 {
@@ -145,18 +145,18 @@ A handler may return:
 }
 ```
 
-## Integration options
+## Integrasjonsvalg
 
 ```ts
 interface Options {
-  mocks?: MockDefinition[];     // the mock definitions to serve
-  enabled?: boolean;            // default true — mocks only ever run during `astro dev`
-  basePath?: string;            // prefix applied to every mock path, e.g. "/api"
-  logger?: boolean;             // log matched requests (default true)
+  mocks?: MockDefinition[];     // mock-definisjonene som skal serveres
+  enabled?: boolean;            // standard true — mocker kjører uansett kun under `astro dev`
+  basePath?: string;            // prefiks som legges på hver mock-sti, f.eks. "/api"
+  logger?: boolean;             // logg matchede requester (standard true)
 }
 ```
 
-Example with a base path:
+Eksempel med en base-sti:
 
 ```js
 mockServer({
@@ -165,17 +165,17 @@ mockServer({
 });
 ```
 
-## How it works
+## Slik fungerer det
 
-The integration registers a Vite dev-server middleware inside the `astro:server:setup`
-hook. Requests matching a mock (by method + path) are answered directly; everything else
-falls through to Astro. Because the hook only runs during `astro dev`, the middleware is
-never part of a production build.
+Integrasjonen registrerer en Vite-mellomvare for utviklingsserveren inne i `astro:server:setup`-hooken.
+Requester som matcher en mock (etter metode + sti) besvares direkte; alt annet
+faller videre til Astro. Siden hooken kun kjører under `astro dev`, blir mellomvaren
+aldri en del av produksjonsbygget.
 
-> **Note:** mocks are served on the same origin as the Astro dev server. If your app
-> fetches data from a different origin (e.g. an absolute URL to another port), point that
-> URL at the dev server origin so the middleware can intercept it.
+> **Merk:** mocker serveres på samme origin som Astro-utviklingsserveren. Hvis appen din
+> henter data fra en annen origin (f.eks. en absolutt URL til en annen port), pek den
+> URL-en mot utviklingsserverens origin slik at mellomvaren kan fange opp den.
 
-## License
+## Lisens
 
 MIT
