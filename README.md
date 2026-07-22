@@ -2,12 +2,12 @@
 
 En [Astro-integrasjon](https://docs.astro.build/en/guides/integrations-guide/) som serverer **mock-HTTP-endepunkter kun under utvikling**.
 
-Mocker kobles inn via Astro sin `astro:server:setup`-hook, som kjører **utelukkende under `astro dev`**. Ingenting registreres for `astro build`, så produksjonsbygget påvirkes aldri.
+Mocks kobles inn via Astro sin `astro:server:setup`-hook, som kjører **utelukkende under `astro dev`**. Ingenting registreres for `astro build`, så produksjonsbygget påvirkes aldri.
 
-- ⚙️ Deklarer mocker i `astro.config` — importer JSON for statiske data, eller JS/TS for dynamiske handlere
-- 🎛️ Egendefinerte statuskoder, responsforsinkelser, dynamiske handlere og `:param`-stiparametere
-- 🔒 Kun for utvikling — havner aldri i produksjonsbygget
-- 🪶 Ingen runtime-avhengigheter
+- Deklarer mocks i `astro.config` — importer JSON for statiske data, eller JS/TS for dynamiske handlere
+- Egendefinerte statuskoder, responsforsinkelser, dynamiske handlere og `:param`-stiparametere
+- Kun for utvikling — havner aldri i produksjonsbygget
+- Ingen runtime-avhengigheter
 
 ## Installasjon
 
