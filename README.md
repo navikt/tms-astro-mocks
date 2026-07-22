@@ -1,4 +1,4 @@
-# tms-astro-mocks
+# @navikt/astro-mocks
 
 En [Astro-integrasjon](https://docs.astro.build/en/guides/integrations-guide/) som serverer **mock-HTTP-endepunkter kun under utvikling**.
 
@@ -11,8 +11,16 @@ Mocks kobles inn via Astro sin `astro:server:setup`-hook, som kjører **utelukke
 
 ## Installasjon
 
+Pakken publiseres til [GitHub Packages](https://npm.pkg.github.com). Konfigurer `@navikt`-scopet mot GitHub-registeret i en `.npmrc` (i prosjektet eller globalt):
+
+```
+@navikt:registry=https://npm.pkg.github.com
+```
+
+Installer deretter:
+
 ```sh
-pnpm add -D tms-astro-mocks
+pnpm add -D @navikt/astro-mocks
 ```
 
 ## Bruk
@@ -21,7 +29,7 @@ Legg integrasjonen til i `astro.config.mjs` og send inn mock-definisjonene dine:
 
 ```js
 import { defineConfig } from "astro/config";
-import mockServer from "tms-astro-mocks";
+import mockServer from "@navikt/astro-mocks";
 
 export default defineConfig({
   integrations: [
@@ -55,7 +63,7 @@ integrasjonen liten og lar deg bruke ren JSON for statiske data og JS/TS for dyn
 ```js
 // astro.config.mjs
 import users from "./mock/users.json" with { type: "json" };
-import mockServer from "tms-astro-mocks";
+import mockServer from "@navikt/astro-mocks";
 
 export default defineConfig({
   integrations: [mockServer({ mocks: users })],
@@ -66,7 +74,7 @@ export default defineConfig({
 
 ```ts
 // mock/products.ts
-import type { MockDefinition } from "tms-astro-mocks";
+import type { MockDefinition } from "@navikt/astro-mocks";
 
 export const productMocks: MockDefinition[] = [
   {
@@ -86,7 +94,7 @@ export const productMocks: MockDefinition[] = [
 // astro.config.mjs
 import users from "./mock/users.json" with { type: "json" };
 import { productMocks } from "./mock/products";
-import mockServer from "tms-astro-mocks";
+import mockServer from "@navikt/astro-mocks";
 
 export default defineConfig({
   integrations: [
