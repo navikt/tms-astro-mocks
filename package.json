@@ -1,6 +1,6 @@
 {
   "name": "@navikt/astro-mocks",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Astro integration that serves mock HTTP endpoints during development only.",
   "type": "module",
   "license": "MIT",
