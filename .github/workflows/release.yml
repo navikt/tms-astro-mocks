@@ -11,10 +11,13 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -74,3 +77,13 @@ jobs:
           gh release create "${{ steps.bump.outputs.version }}" \
             --title "${{ steps.bump.outputs.version }}" \
             --generate-notes
+
+  publish:
+    needs: release
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/publish.yml
+    with:
+      ref: ${{ needs.release.outputs.version }}
+    secrets: inherit
