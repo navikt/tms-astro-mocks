@@ -9,6 +9,15 @@ updates:
     open-pull-requests-limit: 10
     cooldown:
       default-days: 7
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
+    ignore:
+      # Keep @types/node aligned with the Node version used in CI/publish
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       astro:
         patterns:
@@ -36,6 +45,10 @@ updates:
       time: "08:00"
       timezone: "Europe/Oslo"
     open-pull-requests-limit: 10
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
     groups:
       github-actions:
         patterns:
