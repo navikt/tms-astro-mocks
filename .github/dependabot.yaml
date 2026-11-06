@@ -1,0 +1,42 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "08:00"
+      timezone: "Europe/Oslo"
+    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 7
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      vitest:
+        patterns:
+          - "vite"
+          - "vitest"
+          - "@vitest/*"
+      minor-and-patch:
+        update-types:
+          - "patch"
+          - "minor"
+        exclude-patterns:
+          - "astro"
+          - "@astrojs/*"
+          - "vite"
+          - "vitest"
+          - "@vitest/*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "08:00"
+      timezone: "Europe/Oslo"
+    open-pull-requests-limit: 10
+    groups:
+      github-actions:
+        patterns:
+          - "*"
